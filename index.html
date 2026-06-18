@@ -222,6 +222,18 @@ body{
 .reading th,.reading td{border:1px solid var(--border);padding:.45rem .7rem;text-align:left}
 .reading th{background:var(--surface-2);font-weight:700}
 
+/* inline SVG diagrams */
+.reading figure{margin:1.6rem auto;text-align:center;max-width:var(--measure)}
+.reading figure svg{max-width:100%;height:auto;background:var(--surface);
+  border:1px solid var(--border);border-radius:var(--radius-sm);padding:.9rem}
+.reading figure svg text{font-family:var(--font-body)}
+.reading figcaption{font-size:.8rem;color:var(--text-2);margin-top:.55rem;font-style:italic}
+.reading .diagram-wire{stroke:var(--text);stroke-width:1.6;fill:none;stroke-linecap:round}
+.reading .diagram-fill{fill:var(--t3-soft)}
+.reading .diagram-accent{stroke:var(--t3);stroke-width:2;fill:none}
+.reading .diagram-label{fill:var(--text);font-size:12px}
+.reading .diagram-muted{fill:var(--text-2);font-size:11px}
+
 .placeholder{border:1.5px dashed var(--border);border-radius:var(--radius);padding:2.4rem 1.6rem;text-align:center;
   color:var(--text-3);background:repeating-linear-gradient(45deg,transparent,transparent 12px,var(--surface-2) 12px,var(--surface-2) 13px)}
 .placeholder svg{width:34px;height:34px;margin-bottom:.7rem;color:var(--text-3)}
@@ -2561,6 +2573,730 @@ $$R_z(&#92;theta) = &#92;begin{bmatrix}&#92;cos&#92;theta &amp; -&#92;sin&#92;th
 <li><b>Shading</b>: flat (one colour per polygon) → <b>Gouraud</b> (interpolate vertex <i>intensities</i> — misses small highlights) → <b>Phong shading</b> (interpolate <i>normals</i>, light per pixel — better highlights, costlier).</li>
 </ul>
 <blockquote>Exam traps: write $R_x, R_y, R_z$ (sign placement in $R_y$ trips people); perspective divides by z, parallel doesn't; cavalier vs cabinet depth factors; z-buffer vs painter's comparison; Gouraud interpolates intensity, Phong interpolates normals — different "Phong"s (model vs shading).</blockquote>`,
+
+/* ============================================================ TIER 3 — ELECTRONICS & SYSTEMS ============================================================ */
+
+"ee-basic": `<h2>Ohm's law &amp; power</h2>
+<p><b>Ohm's law:</b> $V = IR$ — current is proportional to voltage for a linear (ohmic) resistor. Resistance of a conductor: $R = &#92;rho L / A$ ($&#92;rho$ = resistivity, L = length, A = area). <b>Power</b> dissipated: $P = VI = I^2R = V^2/R$ (watts). Conductance $G = 1/R$ (siemens).</p>
+
+<h2>Kirchhoff's laws</h2>
+<ul>
+<li><b>KCL (current / node law):</b> the algebraic sum of currents entering a node = 0 — charge is conserved. $&#92;sum I_{in} = &#92;sum I_{out}$.</li>
+<li><b>KVL (voltage / loop law):</b> the algebraic sum of voltages around any closed loop = 0 — energy is conserved. Assign loop direction; rises +, drops −.</li>
+</ul>
+<p>These two laws plus Ohm's law solve any resistive network (mesh analysis uses KVL, nodal analysis uses KCL).</p>
+
+<h2>Series &amp; parallel</h2>
+<table>
+<tr><th></th><th>Series</th><th>Parallel</th></tr>
+<tr><td>Same quantity</td><td>current</td><td>voltage</td></tr>
+<tr><td>Resistance</td><td>$R = R_1 + R_2 + &#92;dots$</td><td>$1/R = 1/R_1 + 1/R_2 + &#92;dots$</td></tr>
+<tr><td>Two resistors</td><td>—</td><td>$R = &#92;dfrac{R_1R_2}{R_1+R_2}$</td></tr>
+</table>
+<ul>
+<li><b>Voltage divider:</b> $V_x = V&#92;cdot &#92;dfrac{R_x}{R_{total}}$ (series).</li>
+<li><b>Current divider:</b> $I_x = I&#92;cdot &#92;dfrac{R_{other}}{R_1+R_2}$ (two-branch parallel).</li>
+</ul>
+
+<h2>Star–Delta (Y–Δ) transformation</h2>
+<figure>
+<svg viewBox="0 0 360 160" role="img" aria-label="Star and Delta networks">
+  <text x="80" y="20" class="diagram-label" text-anchor="middle">Star (Y)</text>
+  <line class="diagram-wire" x1="80" y1="80" x2="80" y2="48"/>
+  <line class="diagram-wire" x1="80" y1="80" x2="45" y2="125"/>
+  <line class="diagram-wire" x1="80" y1="80" x2="115" y2="125"/>
+  <circle cx="80" cy="80" r="3.5" class="diagram-accent"/>
+  <text x="80" y="42" class="diagram-muted" text-anchor="middle">A</text>
+  <text x="36" y="137" class="diagram-muted">B</text>
+  <text x="118" y="137" class="diagram-muted">C</text>
+  <text x="92" y="66" class="diagram-muted">Ra</text>
+  <text x="44" y="108" class="diagram-muted">Rb</text>
+  <text x="100" y="108" class="diagram-muted">Rc</text>
+  <text x="280" y="20" class="diagram-label" text-anchor="middle">Delta (Δ)</text>
+  <line class="diagram-wire" x1="280" y1="45" x2="240" y2="125"/>
+  <line class="diagram-wire" x1="280" y1="45" x2="320" y2="125"/>
+  <line class="diagram-wire" x1="240" y1="125" x2="320" y2="125"/>
+  <text x="280" y="40" class="diagram-muted" text-anchor="middle">A</text>
+  <text x="231" y="137" class="diagram-muted">B</text>
+  <text x="323" y="137" class="diagram-muted">C</text>
+  <text x="245" y="88" class="diagram-muted">Rab</text>
+  <text x="300" y="88" class="diagram-muted">Rca</text>
+  <text x="280" y="120" class="diagram-muted" text-anchor="middle">Rbc</text>
+</svg>
+<figcaption>Y–Δ conversion for non-series/parallel bridge networks.</figcaption>
+</figure>
+<ul>
+<li><b>Δ → Y</b> (each Y arm = product of two adjacent Δ resistors ÷ sum of all three): $R_a = &#92;dfrac{R_{ab}R_{ca}}{R_{ab}+R_{bc}+R_{ca}}$.</li>
+<li><b>Y → Δ:</b> $R_{ab} = &#92;dfrac{R_aR_b + R_bR_c + R_cR_a}{R_c}$.</li>
+<li>If all equal: $R_Y = R_&#92;Delta/3$ and $R_&#92;Delta = 3R_Y$.</li>
+</ul>
+<p><i>Use case:</i> unbalanced Wheatstone bridge — convert one Y or Δ to collapse it into series/parallel.</p>
+<blockquote>Exam traps: $R_&#92;Delta = 3R_Y$ (not the reverse); Δ→Y uses <i>product over sum-of-three</i>, Y→Δ uses <i>sum of pairwise products over the opposite arm</i>; series shares current / parallel shares voltage; power has three equivalent forms — pick the one matching the knowns.</blockquote>`,
+
+"ee-thm": `<h2>Why network theorems</h2>
+<p>They replace brute-force mesh/nodal solving with shortcuts for <b>linear, bilateral</b> networks (superposition, Thévenin, Norton, reciprocity) — invaluable when only one branch current or a load's behaviour is wanted.</p>
+
+<h2>Superposition</h2>
+<p>In a linear network the response in any branch = the <b>algebraic sum</b> of responses caused by each independent source acting alone. To kill a source: <b>voltage source → short</b>, <b>current source → open</b> (leave internal resistances). Does not apply to power (a non-linear $I^2R$ quantity).</p>
+
+<h2>Thévenin &amp; Norton</h2>
+<figure>
+<svg viewBox="0 0 360 130" role="img" aria-label="Thevenin equivalent circuit">
+  <rect x="20" y="25" width="120" height="80" rx="6" class="diagram-wire" stroke-dasharray="4 3"/>
+  <text x="80" y="20" class="diagram-muted" text-anchor="middle">Linear network</text>
+  <line class="diagram-wire" x1="140" y1="45" x2="200" y2="45"/>
+  <line class="diagram-wire" x1="140" y1="90" x2="200" y2="90"/>
+  <circle cx="180" cy="45" r="14" class="diagram-accent"/>
+  <text x="180" y="49" class="diagram-muted" text-anchor="middle">Vth</text>
+  <path class="diagram-accent" d="M210 90 l8 -10 l8 20 l8 -20 l8 20 l8 -10 z" transform="translate(20,-45)"/>
+  <line class="diagram-wire" x1="194" y1="45" x2="230" y2="45"/>
+  <line class="diagram-wire" x1="282" y1="45" x2="320" y2="45"/>
+  <text x="256" y="38" class="diagram-muted" text-anchor="middle">Rth</text>
+  <line class="diagram-wire" x1="320" y1="45" x2="320" y2="90"/>
+  <line class="diagram-wire" x1="200" y1="90" x2="320" y2="90"/>
+  <circle cx="320" cy="45" r="3" class="diagram-accent"/>
+  <circle cx="320" cy="90" r="3" class="diagram-accent"/>
+  <text x="335" y="49" class="diagram-muted">a</text>
+  <text x="335" y="94" class="diagram-muted">b</text>
+</svg>
+<figcaption>Any linear two-terminal network ≡ one source + one series resistor.</figcaption>
+</figure>
+<ul>
+<li><b>Thévenin:</b> replace everything left of a-b with a voltage source $V_{th}$ (open-circuit voltage) in series with $R_{th}$.</li>
+<li><b>Norton:</b> a current source $I_N$ (short-circuit current) in parallel with $R_N = R_{th}$.</li>
+<li>Source transform: $V_{th} = I_N R_{th}$, and $I_N = V_{th}/R_{th}$.</li>
+</ul>
+<p><b>Finding $R_{th}$:</b> deactivate all <i>independent</i> sources (V→short, I→open) and look into a-b. With dependent sources, apply a 1 V test source and compute $R_{th} = V_{test}/I_{test}$.</p>
+
+<h2>Maximum power transfer</h2>
+<p>A load draws maximum power when $R_L = R_{th}$ (DC) or $Z_L = Z_{th}^*$ (AC, conjugate match). Then $P_{max} = &#92;dfrac{V_{th}^2}{4R_{th}}$ at only <b>50% efficiency</b> — used for signal/comms, not power delivery.</p>
+
+<h2>Reciprocity &amp; Millman</h2>
+<ul>
+<li><b>Reciprocity:</b> in a single-source linear bilateral network, swapping the excitation and response points leaves the ratio unchanged (no dependent sources).</li>
+<li><b>Millman's theorem:</b> several parallel voltage-source branches collapse to $V = &#92;dfrac{&#92;sum V_kG_k}{&#92;sum G_k}$.</li>
+</ul>
+<blockquote>Exam traps: kill sources correctly (V→short, I→open); $R_N = R_{th}$ always; max power ⇒ 50% efficiency and $P=V_{th}^2/4R_{th}$; superposition forbidden for power; dependent sources need the test-source method for $R_{th}$.</blockquote>`,
+
+"ee-rlc": `<h2>Reactance &amp; impedance</h2>
+<ul>
+<li><b>Inductor:</b> $V = L&#92;,dI/dt$; reactance $X_L = &#92;omega L = 2&#92;pi fL$; current <i>lags</i> voltage 90°.</li>
+<li><b>Capacitor:</b> $I = C&#92;,dV/dt$; reactance $X_C = 1/(&#92;omega C)$; current <i>leads</i> voltage 90°.</li>
+<li><b>Impedance</b> $Z = R + jX$, magnitude $|Z| = &#92;sqrt{R^2 + X^2}$, angle $&#92;theta = &#92;tan^{-1}(X/R)$.</li>
+</ul>
+<p>Mnemonic <b>"ELI the ICE man"</b>: in an inductor (L), E leads I; in a capacitor (C), I leads E.</p>
+
+<h2>First-order transients (time constant)</h2>
+<ul>
+<li><b>R-C:</b> $&#92;tau = RC$; charging $v_C(t) = V(1 - e^{-t/&#92;tau})$, discharging $v_C(t) = V e^{-t/&#92;tau}$.</li>
+<li><b>R-L:</b> $&#92;tau = L/R$; current $i(t) = &#92;dfrac{V}{R}(1 - e^{-t/&#92;tau})$.</li>
+<li>After <b>5τ</b> the circuit is &gt;99% settled (steady state).</li>
+</ul>
+
+<h2>Series RLC resonance</h2>
+<figure>
+<svg viewBox="0 0 320 160" role="img" aria-label="Resonance response curve">
+  <line class="diagram-wire" x1="40" y1="130" x2="300" y2="130"/>
+  <line class="diagram-wire" x1="40" y1="130" x2="40" y2="20"/>
+  <path class="diagram-accent" d="M50 128 C120 128 150 35 170 35 C190 35 220 128 290 128"/>
+  <line class="diagram-wire" x1="170" y1="35" x2="170" y2="130" stroke-dasharray="3 3"/>
+  <line class="diagram-wire" x1="140" y1="60" x2="200" y2="60" stroke-dasharray="3 3"/>
+  <text x="170" y="146" class="diagram-muted" text-anchor="middle">f₀</text>
+  <text x="138" y="146" class="diagram-muted" text-anchor="middle">f₁</text>
+  <text x="202" y="146" class="diagram-muted" text-anchor="middle">f₂</text>
+  <text x="22" y="40" class="diagram-muted">I</text>
+  <text x="210" y="56" class="diagram-muted">0.707 Iₘₐₓ</text>
+  <text x="250" y="146" class="diagram-muted">f →</text>
+</svg>
+<figcaption>Series RLC: current peaks at f₀; bandwidth = f₂ − f₁ at the half-power (0.707) points.</figcaption>
+</figure>
+<ul>
+<li><b>Resonant frequency:</b> $X_L = X_C &#92;Rightarrow f_0 = &#92;dfrac{1}{2&#92;pi&#92;sqrt{LC}}$.</li>
+<li>At resonance Z = R (minimum), current is maximum, circuit is purely resistive (unity power factor).</li>
+<li><b>Quality factor:</b> $Q = &#92;dfrac{&#92;omega_0 L}{R} = &#92;dfrac{1}{&#92;omega_0 RC} = &#92;dfrac{1}{R}&#92;sqrt{L/C}$.</li>
+<li><b>Bandwidth:</b> $BW = f_2 - f_1 = f_0/Q$ — high Q ⇒ sharp, selective.</li>
+</ul>
+<p><b>Parallel RLC ("tank"):</b> at resonance impedance is <i>maximum</i> and line current <i>minimum</i> — used in tuned amplifiers/oscillators; resonance $f_0$ same form (ideal).</p>
+<blockquote>Exam traps: τ = RC but τ = L/R (not LR); 5τ ≈ steady state; series resonance = min Z / max I, parallel = max Z / min I; BW = f₀/Q (high Q = narrow); half-power points are 0.707× (−3 dB), not 0.5×; at resonance pf = 1.</blockquote>`,
+
+"ee-ac": `<h2>Sinusoid quantities</h2>
+<p>For $v(t) = V_m&#92;sin(&#92;omega t)$ with $&#92;omega = 2&#92;pi f$:</p>
+<table>
+<tr><th>Quantity</th><th>Sine wave</th></tr>
+<tr><td>Peak</td><td>$V_m$</td></tr>
+<tr><td>RMS (effective)</td><td>$V_{rms} = V_m/&#92;sqrt{2} = 0.707V_m$</td></tr>
+<tr><td>Average (half cycle)</td><td>$V_{avg} = 2V_m/&#92;pi = 0.637V_m$</td></tr>
+<tr><td>Form factor</td><td>$V_{rms}/V_{avg} = 1.11$</td></tr>
+<tr><td>Peak factor (crest)</td><td>$V_m/V_{rms} = 1.414$</td></tr>
+</table>
+<p>RMS is the DC-equivalent heating value — meters read RMS. Average over a <i>full</i> sine cycle is zero (use half-cycle).</p>
+
+<h2>Power in AC</h2>
+<figure>
+<svg viewBox="0 0 260 150" role="img" aria-label="Power triangle">
+  <line class="diagram-wire" x1="40" y1="120" x2="220" y2="120"/>
+  <line class="diagram-wire" x1="220" y1="120" x2="220" y2="40"/>
+  <line class="diagram-accent" x1="40" y1="120" x2="220" y2="40"/>
+  <path class="diagram-wire" d="M70 120 A30 30 0 0 0 64 104"/>
+  <text x="80" y="114" class="diagram-muted">φ</text>
+  <text x="120" y="138" class="diagram-label" text-anchor="middle">P (W)  active</text>
+  <text x="228" y="85" class="diagram-label">Q (VAR)</text>
+  <text x="228" y="100" class="diagram-muted">reactive</text>
+  <text x="110" y="70" class="diagram-label">S (VA)</text>
+  <text x="110" y="84" class="diagram-muted">apparent</text>
+</svg>
+<figcaption>Power triangle: $S^2 = P^2 + Q^2$.</figcaption>
+</figure>
+<ul>
+<li><b>Active (real)</b> power $P = VI&#92;cos&#92;phi$ (W) — does useful work.</li>
+<li><b>Reactive</b> power $Q = VI&#92;sin&#92;phi$ (VAR) — shuttles energy to L/C, no net work.</li>
+<li><b>Apparent</b> power $S = VI$ (VA), $S = &#92;sqrt{P^2 + Q^2}$.</li>
+<li><b>Power factor</b> $&#92;cos&#92;phi = P/S$ — lagging (inductive), leading (capacitive). Correction: add shunt capacitors to cut Q and the supply current.</li>
+</ul>
+
+<h2>Three-phase systems</h2>
+<ul>
+<li>Three EMFs 120° apart; balanced load draws constant total power (smooth).</li>
+<li><b>Star (Y):</b> $V_L = &#92;sqrt{3}&#92;,V_{ph}$, $I_L = I_{ph}$ (has neutral).</li>
+<li><b>Delta (Δ):</b> $V_L = V_{ph}$, $I_L = &#92;sqrt{3}&#92;,I_{ph}$.</li>
+<li><b>Total power</b> (either): $P = &#92;sqrt{3}&#92;,V_L I_L&#92;cos&#92;phi$.</li>
+</ul>
+<blockquote>Exam traps: RMS = peak/√2 only for sine; form factor 1.11, crest 1.414; average over full cycle = 0; pf = cosφ = P/S; star V_L = √3 V_ph but I_L = I_ph (delta is the mirror); 3-phase power formula has √3 with <i>line</i> values.</blockquote>`,
+
+"ee-trans": `<h2>Transient vs steady state</h2>
+<p>After a switching event the response = <b>transient (natural)</b> part that decays + <b>steady-state (forced)</b> part set by the source. The natural part's form is fixed by the circuit's poles; the forced part matches the input (DC → constant, sinusoid → sinusoid).</p>
+
+<h2>First-order response</h2>
+<p>General solution: $x(t) = x(&#92;infty) + [x(0^+) - x(&#92;infty)]e^{-t/&#92;tau}$ — the <b>three-element method</b>: find initial value, final value, and τ. (RC: τ = RC; RL: τ = L/R.)</p>
+
+<h2>Second-order (RLC) response</h2>
+<p>Characterised by damping ratio ζ and natural frequency $&#92;omega_n = 1/&#92;sqrt{LC}$. Comparing the neper frequency α with $&#92;omega_0$:</p>
+<table>
+<tr><th>Condition</th><th>Damping</th><th>Response</th></tr>
+<tr><td>$&#92;alpha &gt; &#92;omega_0$ (ζ&gt;1)</td><td>Overdamped</td><td>two real roots, slow no overshoot</td></tr>
+<tr><td>$&#92;alpha = &#92;omega_0$ (ζ=1)</td><td>Critically damped</td><td>fastest without overshoot</td></tr>
+<tr><td>$&#92;alpha &lt; &#92;omega_0$ (ζ&lt;1)</td><td>Underdamped</td><td>decaying oscillation (ringing)</td></tr>
+</table>
+
+<h2>Pole–zero plots</h2>
+<figure>
+<svg viewBox="0 0 260 160" role="img" aria-label="Pole-zero plot in s-plane">
+  <line class="diagram-wire" x1="20" y1="80" x2="240" y2="80"/>
+  <line class="diagram-wire" x1="130" y1="20" x2="130" y2="150"/>
+  <text x="232" y="74" class="diagram-muted">σ</text>
+  <text x="138" y="30" class="diagram-muted">jω</text>
+  <text x="100" y="50" class="diagram-accent" font-size="16">×</text>
+  <text x="100" y="120" class="diagram-accent" font-size="16">×</text>
+  <text x="170" y="84" class="diagram-label" font-size="14">○</text>
+  <text x="150" y="100" class="diagram-muted">zero</text>
+  <text x="60" y="46" class="diagram-muted">poles</text>
+  <text x="40" y="148" class="diagram-muted">LHP = stable</text>
+</svg>
+<figcaption>s-plane: × = pole, ○ = zero. Left-half-plane poles ⇒ decaying (stable); imaginary-axis poles ⇒ sustained oscillation.</figcaption>
+</figure>
+<ul>
+<li>Transfer function $H(s) = &#92;dfrac{N(s)}{D(s)}$: <b>zeros</b> = roots of N (H→0), <b>poles</b> = roots of D (H→∞).</li>
+<li>Pole location dictates the natural response: real negative → decay; complex pair → damped sinusoid; right-half-plane → unstable (growing).</li>
+<li>$s = &#92;sigma + j&#92;omega$: real part = decay rate, imaginary part = oscillation frequency.</li>
+</ul>
+<blockquote>Exam traps: x(∞) + transient form; ζ classifies over/critical/under-damped; critically damped is <i>fastest</i> non-oscillatory; poles in LHP ⇒ stable; poles on jω-axis ⇒ marginal/oscillatory; zeros shape but don't cause stability.</blockquote>`,
+
+"ee-2port": `<h2>The two-port idea</h2>
+<figure>
+<svg viewBox="0 0 300 130" role="img" aria-label="Two-port network box">
+  <rect x="100" y="35" width="100" height="60" rx="6" class="diagram-wire"/>
+  <text x="150" y="70" class="diagram-label" text-anchor="middle">Two-port</text>
+  <line class="diagram-wire" x1="40" y1="50" x2="100" y2="50"/>
+  <line class="diagram-wire" x1="40" y1="80" x2="100" y2="80"/>
+  <line class="diagram-wire" x1="200" y1="50" x2="260" y2="50"/>
+  <line class="diagram-wire" x1="200" y1="80" x2="260" y2="80"/>
+  <text x="35" y="42" class="diagram-muted" text-anchor="end">I₁→</text>
+  <text x="55" y="46" class="diagram-muted">+</text>
+  <text x="60" y="74" class="diagram-muted">V₁</text>
+  <text x="265" y="42" class="diagram-muted">I₂→</text>
+  <text x="240" y="74" class="diagram-muted">V₂</text>
+  <text x="70" y="28" class="diagram-muted">input port</text>
+  <text x="230" y="28" class="diagram-muted">output port</text>
+</svg>
+<figcaption>A black box related by two of {V₁, I₁, V₂, I₂} chosen as independent.</figcaption>
+</figure>
+<p>A linear two-port relates the port voltages and currents through a 2×2 parameter matrix. Which two variables are "inputs" defines the parameter set.</p>
+
+<h2>The parameter sets</h2>
+<table>
+<tr><th>Set</th><th>Equations</th><th>Found by</th><th>Best for</th></tr>
+<tr><td>Z (impedance)</td><td>$V_1 = z_{11}I_1 + z_{12}I_2$<br>$V_2 = z_{21}I_1 + z_{22}I_2$</td><td>open-circuit (I=0)</td><td>series connection</td></tr>
+<tr><td>Y (admittance)</td><td>$I_1 = y_{11}V_1 + y_{12}V_2$ …</td><td>short-circuit (V=0)</td><td>parallel connection</td></tr>
+<tr><td>h (hybrid)</td><td>$V_1 = h_{11}I_1 + h_{12}V_2$<br>$I_2 = h_{21}I_1 + h_{22}V_2$</td><td>mixed O/C &amp; S/C</td><td>transistor models</td></tr>
+<tr><td>ABCD (transmission)</td><td>$V_1 = AV_2 - BI_2$<br>$I_1 = CV_2 - DI_2$</td><td>—</td><td>cascade connection</td></tr>
+</table>
+
+<h2>Key facts</h2>
+<ul>
+<li><b>Reciprocity</b> (passive, no dependent sources): $z_{12} = z_{21}$, $y_{12} = y_{21}$, $h_{12} = -h_{21}$, and $AD - BC = 1$.</li>
+<li><b>Symmetry</b> (port-interchangeable): $z_{11} = z_{22}$, $A = D$.</li>
+<li><b>Interconnection rule:</b> series ports add Z-matrices; parallel ports add Y-matrices; <b>cascaded</b> ports <i>multiply</i> ABCD-matrices — the reason transmission parameters exist.</li>
+<li>h-parameters: $h_{11}$ = input impedance, $h_{21}$ = forward current gain ($&#92;beta$ for a BJT), $h_{12}$ = reverse voltage ratio, $h_{22}$ = output admittance.</li>
+</ul>
+<blockquote>Exam traps: Z found with ports <i>open</i> (I=0), Y with ports <i>shorted</i> (V=0); reciprocity ⇒ z₁₂=z₂₁ and AD−BC=1; cascade ⇒ multiply ABCD; h₂₁ = transistor β; ABCD's −sign convention on I₂ (current leaving port 2).</blockquote>`,
+
+"ec-ic": `<h2>What an IC is</h2>
+<p>An <b>integrated circuit</b> packs many components (transistors, resistors, capacitors, interconnect) onto one semiconductor (silicon) chip, fabricated together — far smaller, cheaper, faster and more reliable than discrete builds.</p>
+
+<h2>Classification</h2>
+<ul>
+<li><b>By function:</b> analog (op-amps, regulators), digital (gates, µP, memory), mixed-signal (ADC/DAC, SoC).</li>
+<li><b>By construction:</b> <i>monolithic</i> (all on one chip — cheap, mass-produced) vs <i>hybrid</i> (several chips + film components on one substrate — high power/precision).</li>
+</ul>
+<table>
+<tr><th>Scale</th><th>Gates / chip</th><th>Example</th></tr>
+<tr><td>SSI</td><td>&lt; 12</td><td>basic gate ICs (7400)</td></tr>
+<tr><td>MSI</td><td>12–100</td><td>counters, MUX, adders</td></tr>
+<tr><td>LSI</td><td>100–10k</td><td>early µP, RAM</td></tr>
+<tr><td>VLSI</td><td>10k–millions</td><td>modern CPU/GPU</td></tr>
+<tr><td>ULSI / GSI</td><td>&gt; 10⁶ … 10⁹+</td><td>SoCs</td></tr>
+</table>
+
+<h2>Fabrication outline</h2>
+<p>Wafer growth (Czochralski) → oxidation → photolithography (mask + photoresist + UV) → etching → doping (diffusion / ion implantation) → metallization → testing → packaging. Built layer by layer using <b>planar technology</b>.</p>
+
+<h2>Device models (small-signal)</h2>
+<p>A non-linear device is linearised about a DC bias (Q-point) for AC analysis:</p>
+<ul>
+<li><b>Diode:</b> dynamic resistance $r_d = V_T/I_D$ ($V_T &#92;approx 26$ mV at room temp).</li>
+<li><b>BJT (hybrid-π):</b> $g_m = I_C/V_T$, $r_&#92;pi = &#92;beta/g_m$, plus output resistance $r_o = V_A/I_C$ (Early voltage).</li>
+<li><b>MOSFET:</b> $g_m = &#92;sqrt{2k I_D}$ (saturation), output resistance from channel-length modulation.</li>
+<li>Large-signal vs small-signal: the former for biasing/DC, the latter (h-/π-models) for gain.</li>
+</ul>
+<blockquote>Exam traps: monolithic = single chip, hybrid = multiple; SSI→VLSI gate-count thresholds; ion implantation vs diffusion doping; $V_T$ ≈ 26 mV; $g_m = I_C/V_T$ for BJT; small-signal model is valid only around the chosen Q-point.</blockquote>`,
+
+"ec-diode": `<h2>The PN junction</h2>
+<p>Join p-type (holes) and n-type (electrons): carriers diffuse and recombine at the boundary, leaving a <b>depletion region</b> of fixed ions and a built-in barrier potential (≈ 0.7 V Si, 0.3 V Ge).</p>
+<ul>
+<li><b>Forward bias</b> (p +, n −): barrier shrinks, large current flows once V &gt; cut-in (knee) voltage.</li>
+<li><b>Reverse bias:</b> barrier widens, only tiny saturation current $I_S$; at the <b>breakdown</b> voltage current rises sharply (Zener / avalanche).</li>
+</ul>
+
+<h2>V–I characteristic</h2>
+<figure>
+<svg viewBox="0 0 280 170" role="img" aria-label="Diode I-V characteristic curve">
+  <line class="diagram-wire" x1="20" y1="90" x2="260" y2="90"/>
+  <line class="diagram-wire" x1="160" y1="15" x2="160" y2="165"/>
+  <path class="diagram-accent" d="M175 88 C185 88 188 30 200 25"/>
+  <path class="diagram-wire" d="M160 92 L60 96 L55 155" />
+  <text x="200" y="40" class="diagram-muted">forward</text>
+  <text x="178" y="105" class="diagram-muted">0.7V</text>
+  <text x="60" y="150" class="diagram-muted">reverse</text>
+  <text x="40" y="110" class="diagram-muted">breakdown</text>
+  <text x="248" y="84" class="diagram-muted">V</text>
+  <text x="166" y="25" class="diagram-muted">I</text>
+</svg>
+<figcaption>Exponential forward conduction past the knee; sharp reverse breakdown.</figcaption>
+</figure>
+<p><b>Shockley diode equation:</b> $I = I_S&#92;left(e^{V/&#92;eta V_T} - 1&#92;right)$, where $V_T = kT/q &#92;approx 26$ mV and η ≈ 1–2.</p>
+
+<h2>Diode types</h2>
+<ul>
+<li><b>Rectifier</b> — power conversion. <b>Zener</b> — operates in reverse breakdown as a voltage reference/regulator.</li>
+<li><b>LED</b> — emits light on forward bias. <b>Photodiode</b> — reverse current ∝ light. <b>Schottky</b> — metal-semiconductor, low drop (~0.3 V), very fast.</li>
+<li><b>Varactor</b> — voltage-variable capacitance (tuning). <b>Tunnel</b> — negative-resistance region.</li>
+</ul>
+
+<h2>Rectifier circuits</h2>
+<table>
+<tr><th></th><th>Half-wave</th><th>Full-wave (bridge)</th></tr>
+<tr><td>$V_{dc}$</td><td>$V_m/&#92;pi$</td><td>$2V_m/&#92;pi$</td></tr>
+<tr><td>Ripple factor</td><td>1.21</td><td>0.48</td></tr>
+<tr><td>Efficiency</td><td>40.6%</td><td>81.2%</td></tr>
+<tr><td>Ripple freq</td><td>$f$</td><td>$2f$</td></tr>
+<tr><td>PIV (bridge)</td><td>$V_m$</td><td>$V_m$</td></tr>
+</table>
+<p>A shunt <b>capacitor filter</b> smooths the output; ripple $V_r &#92;approx I/(fC)$ (half-wave) — bigger C ⇒ less ripple.</p>
+<blockquote>Exam traps: Si knee 0.7 V / Ge 0.3 V; Zener works in <i>reverse</i> breakdown; full-wave doubles V_dc, halves ripple, doubles ripple frequency; bridge PIV = V_m (centre-tap = 2V_m); Schottky low-drop fast; $V_T$ ≈ 26 mV.</blockquote>`,
+
+"ec-tr": `<h2>BJT fundamentals</h2>
+<p>Three doped regions — emitter, base, collector. Tiny base current controls large collector current: $I_E = I_B + I_C$, $&#92;beta = I_C/I_B$ (50–300), $&#92;alpha = I_C/I_E = &#92;dfrac{&#92;beta}{&#92;beta+1}$ (&lt;1).</p>
+<table>
+<tr><th>Region</th><th>EB junction</th><th>CB junction</th><th>Use</th></tr>
+<tr><td>Cut-off</td><td>reverse</td><td>reverse</td><td>OFF switch</td></tr>
+<tr><td>Active</td><td>forward</td><td>reverse</td><td>amplifier</td></tr>
+<tr><td>Saturation</td><td>forward</td><td>forward</td><td>ON switch</td></tr>
+</table>
+<p><b>Configurations:</b> CE (high voltage &amp; current gain, 180° phase shift — most common), CB (high voltage gain, current gain &lt;1, high freq), CC/emitter-follower (voltage gain ≈ 1, high input / low output impedance — buffer).</p>
+
+<h2>Biasing</h2>
+<p>Set a stable Q-point in the active region. <b>Voltage-divider bias</b> is preferred — stability factor near 1, immune to β spread and temperature. Thermal runaway is countered by the emitter resistor $R_E$ (negative feedback).</p>
+
+<h2>MOSFET</h2>
+<p>Voltage-controlled (gate draws ~no DC current), high input impedance. Enhancement-mode conducts only past threshold $V_{GS} &gt; V_{th}$. In saturation: $I_D = &#92;tfrac{1}{2}k(V_{GS} - V_{th})^2$. Depletion-mode conducts at $V_{GS} = 0$.</p>
+
+<h2>CMOS</h2>
+<figure>
+<svg viewBox="0 0 220 180" role="img" aria-label="CMOS inverter">
+  <line class="diagram-wire" x1="110" y1="15" x2="110" y2="35"/>
+  <text x="118" y="20" class="diagram-muted">V_DD</text>
+  <rect x="90" y="35" width="40" height="35" rx="4" class="diagram-accent"/>
+  <text x="110" y="57" class="diagram-muted" text-anchor="middle">PMOS</text>
+  <line class="diagram-wire" x1="110" y1="70" x2="110" y2="95"/>
+  <rect x="90" y="95" width="40" height="35" rx="4" class="diagram-accent"/>
+  <text x="110" y="117" class="diagram-muted" text-anchor="middle">NMOS</text>
+  <line class="diagram-wire" x1="110" y1="130" x2="110" y2="155"/>
+  <line class="diagram-wire" x1="100" y1="155" x2="120" y2="155"/>
+  <line class="diagram-wire" x1="104" y1="160" x2="116" y2="160"/>
+  <line class="diagram-wire" x1="50" y1="82" x2="90" y2="82"/>
+  <text x="40" y="86" class="diagram-muted" text-anchor="end">in</text>
+  <line class="diagram-wire" x1="110" y1="82" x2="170" y2="82"/>
+  <text x="178" y="86" class="diagram-muted">out</text>
+  <circle cx="110" cy="82" r="2.5" class="diagram-accent"/>
+</svg>
+<figcaption>CMOS inverter: complementary PMOS (pull-up) + NMOS (pull-down).</figcaption>
+</figure>
+<p>Complementary PMOS + NMOS pair. Only one transistor conducts in each steady state ⇒ near-<b>zero static power</b>; power is dissipated only while switching ($P = CV^2f$). This low-power, high-density property makes CMOS the basis of all modern digital ICs.</p>
+<blockquote>Exam traps: $I_E = I_B + I_C$, α = β/(β+1) &lt; 1; active needs EB forward + CB reverse; CE gives 180° phase shift; emitter-follower buffers (gain ≈1, high Z_in); voltage-divider bias is most stable; MOSFET is voltage-controlled / high Z_in; CMOS static power ≈ 0, dynamic = CV²f.</blockquote>`,
+
+"ec-amp": `<h2>The ideal op-amp</h2>
+<ul>
+<li>Infinite open-loop gain $A_{OL}$, infinite input impedance, zero output impedance, infinite bandwidth, zero offset.</li>
+<li><b>Two golden rules</b> (with negative feedback): (1) no current flows into the inputs; (2) the inputs are at the same voltage — a <b>virtual short</b>.</li>
+</ul>
+
+<h2>Core configurations</h2>
+<figure>
+<svg viewBox="0 0 280 140" role="img" aria-label="Inverting amplifier">
+  <polygon points="120,40 120,110 185,75" class="diagram-accent"/>
+  <text x="135" y="60" class="diagram-muted">−</text>
+  <text x="135" y="100" class="diagram-muted">+</text>
+  <line class="diagram-wire" x1="30" y1="55" x2="80" y2="55"/>
+  <text x="55" y="48" class="diagram-muted">Rin</text>
+  <rect x="80" y="50" width="30" height="10" class="diagram-wire"/>
+  <line class="diagram-wire" x1="110" y1="55" x2="120" y2="55"/>
+  <line class="diagram-wire" x1="120" y1="100" x2="105" y2="100"/>
+  <line class="diagram-wire" x1="105" y1="100" x2="105" y2="125"/>
+  <line class="diagram-wire" x1="98" y1="125" x2="112" y2="125"/>
+  <path class="diagram-wire" d="M115 30 L115 55 M115 30 L160 30 L160 75 L185 75"/>
+  <rect x="125" y="25" width="30" height="10" class="diagram-wire"/>
+  <text x="140" y="20" class="diagram-muted">Rf</text>
+  <text x="25" y="50" class="diagram-muted" text-anchor="end">Vin</text>
+  <text x="195" y="79" class="diagram-muted">Vout</text>
+</svg>
+<figcaption>Inverting amp: feedback Rf to the virtual-ground (−) input.</figcaption>
+</figure>
+<table>
+<tr><th>Circuit</th><th>Gain / output</th></tr>
+<tr><td>Inverting</td><td>$V_o = -&#92;dfrac{R_f}{R_{in}}V_{in}$</td></tr>
+<tr><td>Non-inverting</td><td>$V_o = &#92;left(1 + &#92;dfrac{R_f}{R_{in}}&#92;right)V_{in}$</td></tr>
+<tr><td>Voltage follower</td><td>$V_o = V_{in}$ (buffer, gain 1)</td></tr>
+<tr><td>Summing</td><td>$V_o = -R_f&#92;left(&#92;tfrac{V_1}{R_1}+&#92;tfrac{V_2}{R_2}+&#92;dots&#92;right)$</td></tr>
+<tr><td>Difference</td><td>$V_o = &#92;dfrac{R_f}{R_1}(V_2 - V_1)$</td></tr>
+<tr><td>Integrator</td><td>$V_o = -&#92;dfrac{1}{RC}&#92;int V_{in}&#92;,dt$</td></tr>
+<tr><td>Differentiator</td><td>$V_o = -RC&#92;dfrac{dV_{in}}{dt}$</td></tr>
+</table>
+
+<h2>Real op-amp parameters</h2>
+<p><b>CMRR</b> (common-mode rejection ratio — high is good), <b>slew rate</b> (max dV/dt, V/µs), <b>gain-bandwidth product</b> (GBW = gain × bandwidth = constant), input offset voltage/bias current.</p>
+
+<h2>Untuned vs tuned amplifiers</h2>
+<ul>
+<li><b>Untuned</b> (RC-coupled, wideband) — flat gain over a broad band; audio/general purpose.</li>
+<li><b>Tuned</b> — an LC tank as the load resonates at $f_0 = 1/(2&#92;pi&#92;sqrt{LC})$: large gain over a narrow band, high selectivity (radio/IF stages).</li>
+</ul>
+<blockquote>Exam traps: virtual short + no input current solve every config; inverting gain is −Rf/Rin (negative); GBW = constant (trade gain for bandwidth); slew rate limits large fast signals; high CMRR rejects noise common to both inputs; tuned amp = narrowband/selective via LC resonance.</blockquote>`,
+
+"ec-spec": `<h2>Instrumentation amplifier</h2>
+<figure>
+<svg viewBox="0 0 300 150" role="img" aria-label="Three op-amp instrumentation amplifier">
+  <polygon points="70,25 70,65 110,45" class="diagram-accent"/>
+  <polygon points="70,85 70,125 110,105" class="diagram-accent"/>
+  <polygon points="190,55 190,95 235,75" class="diagram-accent"/>
+  <line class="diagram-wire" x1="40" y1="35" x2="70" y2="35"/>
+  <line class="diagram-wire" x1="40" y1="115" x2="70" y2="115"/>
+  <text x="35" y="39" class="diagram-muted" text-anchor="end">V1</text>
+  <text x="35" y="119" class="diagram-muted" text-anchor="end">V2</text>
+  <line class="diagram-wire" x1="80" y1="55" x2="80" y2="95"/>
+  <text x="60" y="78" class="diagram-muted">Rg</text>
+  <line class="diagram-wire" x1="110" y1="45" x2="190" y2="65"/>
+  <line class="diagram-wire" x1="110" y1="105" x2="190" y2="85"/>
+  <line class="diagram-wire" x1="235" y1="75" x2="270" y2="75"/>
+  <text x="278" y="79" class="diagram-muted">Vout</text>
+</svg>
+<figcaption>Three-op-amp in-amp: buffered inputs + difference stage; gain set by a single Rg.</figcaption>
+</figure>
+<p>A precision difference amplifier with very high input impedance and high CMRR, gain set by one resistor: $A = &#92;left(1 + &#92;dfrac{2R}{R_g}&#92;right)&#92;dfrac{R_3}{R_2}$. Used for tiny sensor signals (strain gauges, ECG) riding on large common-mode noise.</p>
+
+<h2>Isolation amplifier</h2>
+<p>Passes a signal across a galvanic barrier (no direct conductive path) using transformer, optical or capacitive coupling. Protects patients/equipment and breaks ground loops — essential in medical and high-voltage instrumentation. Rated by isolation voltage (kV).</p>
+
+<h2>Log &amp; antilog amplifiers</h2>
+<ul>
+<li><b>Log amp:</b> a diode/BJT in the feedback path exploits the exponential I–V law so $V_o &#92;propto &#92;ln(V_{in})$.</li>
+<li><b>Antilog (exponential) amp:</b> diode in the input path gives $V_o &#92;propto e^{V_{in}}$.</li>
+<li><b>Use:</b> analog multiply/divide (add/subtract logs), signal compression, dB conversion, true-RMS computation.</li>
+</ul>
+
+<h2>Other specialised types</h2>
+<ul>
+<li><b>Operational transconductance amp (OTA):</b> output current ∝ input voltage; gain tunable by bias current.</li>
+<li><b>Chopper / auto-zero:</b> cancels offset and drift for ultra-low-DC measurement.</li>
+<li><b>Programmable-gain amp (PGA):</b> digitally selectable gain.</li>
+</ul>
+<blockquote>Exam traps: in-amp = 3 op-amps, one-resistor gain, high CMRR for sensors; isolation amp breaks the conductive path (safety / ground loops); log amp puts the diode in feedback (antilog in input); log/antilog enable analog multiplication.</blockquote>`,
+
+"ec-osc": `<h2>What an oscillator is</h2>
+<p>An amplifier with positive feedback that generates an AC waveform <b>without</b> an input signal — it converts DC to a periodic output.</p>
+
+<h2>Barkhausen criterion</h2>
+<p>For sustained oscillation: <b>loop gain magnitude $|A&#92;beta| = 1$</b> and <b>total phase shift = 0° (or 360°)</b>. At start-up $A&#92;beta &gt; 1$ so noise grows; non-linearity then settles it to $A&#92;beta = 1$.</p>
+<figure>
+<svg viewBox="0 0 280 110" role="img" aria-label="Oscillator feedback loop">
+  <rect x="60" y="30" width="70" height="40" rx="4" class="diagram-accent"/>
+  <text x="95" y="55" class="diagram-muted" text-anchor="middle">Amp A</text>
+  <rect x="150" y="30" width="70" height="40" rx="4" class="diagram-wire"/>
+  <text x="185" y="55" class="diagram-muted" text-anchor="middle">β network</text>
+  <line class="diagram-wire" x1="130" y1="50" x2="150" y2="50"/>
+  <line class="diagram-wire" x1="220" y1="50" x2="245" y2="50"/>
+  <line class="diagram-wire" x1="245" y1="50" x2="245" y2="90"/>
+  <line class="diagram-wire" x1="245" y1="90" x2="40" y2="90"/>
+  <line class="diagram-wire" x1="40" y1="90" x2="40" y2="50"/>
+  <line class="diagram-wire" x1="40" y1="50" x2="60" y2="50"/>
+  <text x="232" y="46" class="diagram-muted">out</text>
+</svg>
+<figcaption>Positive-feedback loop: amplifier gain A × feedback factor β.</figcaption>
+</figure>
+
+<h2>Types &amp; frequencies</h2>
+<table>
+<tr><th>Oscillator</th><th>Frequency</th><th>Range</th></tr>
+<tr><td>RC phase-shift</td><td>$f = &#92;dfrac{1}{2&#92;pi RC&#92;sqrt{6}}$</td><td>audio (low)</td></tr>
+<tr><td>Wien bridge</td><td>$f = &#92;dfrac{1}{2&#92;pi RC}$</td><td>audio, low distortion</td></tr>
+<tr><td>Hartley (tapped L)</td><td>$f = &#92;dfrac{1}{2&#92;pi&#92;sqrt{L_TC}}$</td><td>RF</td></tr>
+<tr><td>Colpitts (tapped C)</td><td>$f = &#92;dfrac{1}{2&#92;pi&#92;sqrt{LC_T}}$</td><td>RF</td></tr>
+<tr><td>Crystal</td><td>quartz resonance</td><td>very stable RF</td></tr>
+</table>
+<ul>
+<li><b>RC (phase-shift, Wien)</b> — low frequencies; three RC sections give 180° to add to the amplifier's 180°.</li>
+<li><b>LC (Hartley, Colpitts)</b> — radio frequencies; tank sets f. Mnemonic: Hartley = tapped inductor, Colpitts = tapped capacitor.</li>
+<li><b>Crystal</b> — quartz piezoelectric resonator: extremely high Q, superb frequency stability (clocks, µC). Series &amp; parallel resonant modes very close together.</li>
+</ul>
+
+<h2>Waveform generators</h2>
+<p><b>Relaxation oscillators</b> charge/discharge a capacitor through a threshold device — the 555 timer in astable mode produces square waves; integrators turn square → triangle; comparators produce square/pulse. Voltage-controlled oscillators (VCO) vary f with control voltage.</p>
+<blockquote>Exam traps: Barkhausen = |Aβ| = 1 AND 0°/360° phase; need Aβ &gt; 1 to start; Hartley = tapped <i>inductor</i>, Colpitts = tapped <i>capacitor</i> (don't swap); crystal = highest stability/Q; RC for audio, LC for RF; Wien-bridge f = 1/(2πRC).</blockquote>`,
+
+"ec-conv": `<h2>Why convert</h2>
+<p>The real world is analog; processors are digital. <b>ADC</b> samples → quantises → encodes; <b>DAC</b> reconstructs an analog level from a digital code.</p>
+
+<h2>Resolution &amp; quantisation</h2>
+<ul>
+<li><b>n-bit</b> converter has $2^n$ levels; <b>step (LSB)</b> = $V_{FS}/2^n$.</li>
+<li><b>Quantisation error</b> ≤ ±½ LSB; SNR of an ideal ADC ≈ $6.02n + 1.76$ dB.</li>
+<li>Resolution improves (finer steps) as n grows; e.g. 8-bit over 5 V → 19.5 mV/step.</li>
+</ul>
+
+<h2>DAC architectures</h2>
+<figure>
+<svg viewBox="0 0 300 130" role="img" aria-label="R-2R ladder DAC">
+  <line class="diagram-wire" x1="20" y1="40" x2="260" y2="40"/>
+  <rect x="40" y="35" width="26" height="10" class="diagram-wire"/>
+  <rect x="110" y="35" width="26" height="10" class="diagram-wire"/>
+  <rect x="180" y="35" width="26" height="10" class="diagram-wire"/>
+  <text x="53" y="30" class="diagram-muted">R</text>
+  <text x="123" y="30" class="diagram-muted">R</text>
+  <text x="193" y="30" class="diagram-muted">R</text>
+  <line class="diagram-wire" x1="40" y1="40" x2="40" y2="90"/>
+  <line class="diagram-wire" x1="100" y1="40" x2="100" y2="90"/>
+  <line class="diagram-wire" x1="170" y1="40" x2="170" y2="90"/>
+  <line class="diagram-wire" x1="240" y1="40" x2="240" y2="90"/>
+  <rect x="35" y="60" width="10" height="22" class="diagram-wire"/>
+  <rect x="95" y="60" width="10" height="22" class="diagram-wire"/>
+  <rect x="165" y="60" width="10" height="22" class="diagram-wire"/>
+  <rect x="235" y="60" width="10" height="22" class="diagram-wire"/>
+  <text x="55" y="78" class="diagram-muted">2R</text>
+  <text x="115" y="78" class="diagram-muted">2R</text>
+  <text x="185" y="78" class="diagram-muted">2R</text>
+  <text x="255" y="78" class="diagram-muted">2R</text>
+  <line class="diagram-wire" x1="20" y1="90" x2="245" y2="90"/>
+  <text x="265" y="44" class="diagram-muted">→ out</text>
+</svg>
+<figcaption>R-2R ladder: only two resistor values — easy to integrate accurately.</figcaption>
+</figure>
+<ul>
+<li><b>Binary-weighted</b> — each bit drives a resistor of weight $2^k R$; simple but needs a wide, precise resistor spread.</li>
+<li><b>R-2R ladder</b> — uses just two values (R and 2R) repeated; the standard, scalable design.</li>
+</ul>
+
+<h2>ADC architectures</h2>
+<table>
+<tr><th>Type</th><th>Speed</th><th>Notes</th></tr>
+<tr><td>Flash (parallel)</td><td>fastest</td><td>$2^n - 1$ comparators — costly</td></tr>
+<tr><td>Successive approximation (SAR)</td><td>medium</td><td>binary search, n clocks — most common</td></tr>
+<tr><td>Dual-slope (integrating)</td><td>slow</td><td>high accuracy, noise-rejecting (DMMs)</td></tr>
+<tr><td>Sigma-delta (Σ-Δ)</td><td>slow–med</td><td>oversampling, very high resolution (audio)</td></tr>
+<tr><td>Counter / ramp</td><td>slow</td><td>simple, up to $2^n$ clocks</td></tr>
+</table>
+<p>A <b>sample-and-hold</b> freezes the input during conversion (anti-aliasing filter precedes it). SAR trades speed for hardware; flash trades hardware for speed.</p>
+<blockquote>Exam traps: levels = 2ⁿ, step = V_FS/2ⁿ; quantisation error ≤ ½ LSB; flash is fastest but needs 2ⁿ−1 comparators; SAR = binary search in n clocks; dual-slope rejects mains noise (used in meters); Σ-Δ uses oversampling; R-2R needs only two resistor values.</blockquote>`,
+
+"ec-psu": `<h2>The linear supply chain</h2>
+<figure>
+<svg viewBox="0 0 340 90" role="img" aria-label="Power supply block diagram">
+  <rect x="10" y="30" width="50" height="35" rx="4" class="diagram-wire"/>
+  <text x="35" y="51" class="diagram-muted" text-anchor="middle">Xfmr</text>
+  <rect x="80" y="30" width="60" height="35" rx="4" class="diagram-wire"/>
+  <text x="110" y="51" class="diagram-muted" text-anchor="middle">Rectifier</text>
+  <rect x="160" y="30" width="50" height="35" rx="4" class="diagram-wire"/>
+  <text x="185" y="51" class="diagram-muted" text-anchor="middle">Filter</text>
+  <rect x="230" y="30" width="65" height="35" rx="4" class="diagram-accent"/>
+  <text x="262" y="51" class="diagram-muted" text-anchor="middle">Regulator</text>
+  <line class="diagram-wire" x1="60" y1="47" x2="80" y2="47"/>
+  <line class="diagram-wire" x1="140" y1="47" x2="160" y2="47"/>
+  <line class="diagram-wire" x1="210" y1="47" x2="230" y2="47"/>
+  <line class="diagram-wire" x1="295" y1="47" x2="320" y2="47"/>
+  <text x="328" y="51" class="diagram-muted">DC</text>
+</svg>
+<figcaption>Transformer → rectifier → filter → regulator: steps AC mains down to clean DC.</figcaption>
+</figure>
+<p>Transformer steps voltage down → rectifier makes pulsating DC → capacitor filter smooths ripple → regulator holds output constant against line/load changes.</p>
+
+<h2>Regulation metrics</h2>
+<ul>
+<li><b>Line regulation</b> — output change per input change. <b>Load regulation</b> — output change from no-load to full-load: $&#92;%\,Reg = &#92;dfrac{V_{NL} - V_{FL}}{V_{FL}}&#92;times100$.</li>
+<li><b>Ripple rejection</b>, efficiency, dropout voltage.</li>
+</ul>
+
+<h2>Linear regulators</h2>
+<ul>
+<li><b>Zener (shunt)</b> — Zener holds output; series R drops the rest. Simple, low current.</li>
+<li><b>Series pass</b> — a transistor in series, controlled by an error amp comparing output to a reference (feedback). Better regulation/current.</li>
+<li><b>IC regulators</b> — 78xx (positive, e.g. 7805 = +5 V), 79xx (negative), LM317 (adjustable: $V_o = 1.25(1 + R_2/R_1)$).</li>
+<li>Linear = low noise, simple, but <b>inefficient</b> (wastes $(V_{in}-V_{out})I$ as heat).</li>
+</ul>
+
+<h2>Switched-mode power supply (SMPS)</h2>
+<p>A transistor switches fast (tens of kHz–MHz); an inductor/capacitor averages the pulses; <b>PWM</b> duty cycle sets output. High efficiency (80–95%), small/light, but noisier.</p>
+<table>
+<tr><th>Topology</th><th>Output</th></tr>
+<tr><td>Buck (step-down)</td><td>$V_o = D&#92;,V_{in}$</td></tr>
+<tr><td>Boost (step-up)</td><td>$V_o = &#92;dfrac{V_{in}}{1-D}$</td></tr>
+<tr><td>Buck-boost</td><td>$V_o = -&#92;dfrac{D}{1-D}V_{in}$</td></tr>
+</table>
+<p>D = duty cycle. Isolated versions (flyback, forward) add a transformer.</p>
+<blockquote>Exam traps: block order Xfmr→Rect→Filter→Reg; 7805 = +5 V, 79xx = negative, LM317 adjustable; linear = simple/low-noise/inefficient, SMPS = efficient/noisy; buck V_o = DV_in, boost = V_in/(1−D); load reg uses (V_NL−V_FL)/V_FL.</blockquote>`,
+
+"ec-pe": `<h2>Power electronics scope</h2>
+<p>Controlling and converting <b>electric power</b> with semiconductor switches (efficiency matters far more than signal fidelity). Four conversions: AC→DC (rectifier), DC→DC (chopper), DC→AC (inverter), AC→AC (cycloconverter / AC controller).</p>
+
+<h2>Thyristor family</h2>
+<ul>
+<li><b>SCR (silicon-controlled rectifier)</b> — 4-layer PNPN, three terminals (anode, cathode, gate). A gate pulse <b>latches</b> it ON; it stays on until anode current drops below the holding current. Used for controlled rectification and AC power control.</li>
+<li><b>TRIAC</b> — bidirectional: conducts both half-cycles (two SCRs back-to-back) — AC dimmers, motor speed control.</li>
+<li><b>DIAC</b> — bidirectional trigger device, fires a TRIAC at a set voltage.</li>
+<li><b>GTO</b> — gate turn-off thyristor (gate can also switch it off).</li>
+<li><b>Power transistors / IGBT / power MOSFET</b> — fully controllable switches for inverters &amp; SMPS.</li>
+</ul>
+
+<h2>Phase control</h2>
+<p>Delaying the gate <b>firing angle α</b> within each half-cycle sets the average output. Controlled half-wave average: $V_{dc} = &#92;dfrac{V_m}{2&#92;pi}(1 + &#92;cos&#92;alpha)$. Larger α ⇒ less power — the basis of lamp dimmers and motor drives.</p>
+
+<h2>Converters at a glance</h2>
+<table>
+<tr><th>Converter</th><th>Function</th></tr>
+<tr><td>Rectifier</td><td>AC → DC (uncontrolled / SCR-controlled)</td></tr>
+<tr><td>Chopper</td><td>DC → DC (variable)</td></tr>
+<tr><td>Inverter</td><td>DC → AC (PWM, for UPS/drives/solar)</td></tr>
+<tr><td>Cycloconverter</td><td>AC → AC (different frequency)</td></tr>
+</table>
+
+<h2>Communication circuits (intro)</h2>
+<ul>
+<li><b>Mixer</b> — multiplies two signals to shift frequency (heterodyning), producing sum &amp; difference frequencies.</li>
+<li><b>Modulator / demodulator (detector)</b> — impress / recover information onto a carrier (e.g. diode envelope detector for AM).</li>
+<li><b>Phase-locked loop (PLL)</b> — phase detector + loop filter + VCO; locks to an input phase for FM demod, frequency synthesis, clock recovery.</li>
+<li><b>RF tuned amplifiers</b> — narrowband LC-loaded gain stages for selectivity.</li>
+</ul>
+<blockquote>Exam traps: SCR latches with a gate pulse, turns off only when current &lt; holding current; TRIAC = bidirectional (AC control), DIAC triggers it; IGBT/MOSFET fully controllable; larger firing angle α ⇒ lower output; inverter = DC→AC, chopper = DC→DC; PLL = phase detector + filter + VCO.</blockquote>`,
+
+"comm-an": `<h2>Why modulate</h2>
+<p>Shifting a baseband message onto a high-frequency <b>carrier</b> allows practical antenna sizes (≈ λ/4), frequency-division multiplexing, and longer range. The carrier $c(t) = A_c&#92;cos(2&#92;pi f_c t)$ has three modifiable properties → AM, FM, PM.</p>
+
+<h2>Amplitude modulation (AM)</h2>
+<figure>
+<svg viewBox="0 0 320 120" role="img" aria-label="AM modulated waveform">
+  <line class="diagram-wire" x1="10" y1="60" x2="310" y2="60"/>
+  <path class="diagram-accent" d="M10 60 Q40 10 70 60 Q100 110 130 60 Q160 20 190 60 Q220 100 250 60 Q280 30 310 60"/>
+  <path class="diagram-wire" d="M10 60 Q40 12 70 60 Q100 108 130 60 Q160 22 190 60 Q220 98 250 60 Q280 32 310 60" stroke-dasharray="3 3" opacity="0.6"/>
+  <text x="150" y="115" class="diagram-muted">envelope carries the message</text>
+</svg>
+<figcaption>AM: the carrier's amplitude (envelope) follows the message.</figcaption>
+</figure>
+<ul>
+<li><b>Modulation index</b> $&#92;mu = A_m/A_c$ (0–1). $&#92;mu = &#92;dfrac{V_{max} - V_{min}}{V_{max} + V_{min}}$. Over-modulation (μ&gt;1) distorts.</li>
+<li><b>Bandwidth</b> $BW = 2f_m$ (carrier ± two sidebands).</li>
+<li><b>Power:</b> $P_t = P_c&#92;left(1 + &#92;dfrac{&#92;mu^2}{2}&#92;right)$; even at μ=1, two-thirds of the power is in the carrier (which holds no information) — inefficient.</li>
+<li><b>Variants:</b> DSB-SC (suppress carrier), SSB (one sideband — half the BW, best power efficiency), VSB (TV video).</li>
+</ul>
+
+<h2>Angle modulation (FM &amp; PM)</h2>
+<ul>
+<li><b>FM</b> — carrier frequency varies with the message; modulation index $&#92;beta = &#92;Delta f/f_m$.</li>
+<li><b>Carson's rule</b> bandwidth: $BW &#92;approx 2(&#92;Delta f + f_m) = 2f_m(&#92;beta + 1)$.</li>
+<li>FM is noise-resistant (info is in frequency, not amplitude) and is the basis of high-fidelity radio — at the cost of wider bandwidth.</li>
+<li><b>PM</b> — carrier phase varies with the message; closely related to FM (FM = PM of the integral of the message).</li>
+</ul>
+
+<h2>Receivers</h2>
+<p>The <b>superheterodyne</b> receiver mixes the incoming RF with a local oscillator to a fixed <b>intermediate frequency (IF)</b>, where most gain and selectivity happen, then detects (envelope detector for AM, discriminator/PLL for FM). Image frequency rejection is a key design issue.</p>
+<blockquote>Exam traps: AM BW = 2f_m, FM BW = Carson's 2(Δf+f_m); μ ≤ 1 to avoid distortion; AM total power = P_c(1+μ²/2), carrier wastes power; SSB halves BW &amp; saves power; FM trades bandwidth for noise immunity; superhet converts to a fixed IF.</blockquote>`,
+
+"comm-dig": `<h2>Sampling theorem</h2>
+<p><b>Nyquist:</b> a signal band-limited to $f_m$ is fully recoverable if sampled at $f_s &#92;ge 2f_m$. Below this, spectra overlap → <b>aliasing</b> (high frequencies masquerade as low ones); an anti-aliasing low-pass filter precedes the sampler.</p>
+<figure>
+<svg viewBox="0 0 320 110" role="img" aria-label="Sampling a sine wave">
+  <line class="diagram-wire" x1="10" y1="55" x2="310" y2="55"/>
+  <path class="diagram-accent" d="M10 55 Q50 5 90 55 Q130 105 170 55 Q210 5 250 55 Q290 105 310 75"/>
+  <line class="diagram-wire" x1="40" y1="55" x2="40" y2="25"/>
+  <line class="diagram-wire" x1="70" y1="55" x2="70" y2="20"/>
+  <line class="diagram-wire" x1="110" y1="55" x2="110" y2="80"/>
+  <line class="diagram-wire" x1="150" y1="55" x2="150" y2="70"/>
+  <line class="diagram-wire" x1="190" y1="55" x2="190" y2="25"/>
+  <line class="diagram-wire" x1="230" y1="55" x2="230" y2="22"/>
+  <circle cx="40" cy="25" r="3" class="diagram-accent"/>
+  <circle cx="70" cy="20" r="3" class="diagram-accent"/>
+  <circle cx="110" cy="80" r="3" class="diagram-accent"/>
+  <circle cx="150" cy="70" r="3" class="diagram-accent"/>
+  <circle cx="190" cy="25" r="3" class="diagram-accent"/>
+  <circle cx="230" cy="22" r="3" class="diagram-accent"/>
+  <text x="160" y="105" class="diagram-muted">samples at fs ≥ 2fm</text>
+</svg>
+<figcaption>Discrete samples capture the analog signal when fs is high enough.</figcaption>
+</figure>
+
+<h2>Pulse modulation</h2>
+<ul>
+<li><b>PAM</b> — pulse <i>amplitude</i> ∝ sample (still analog amplitude).</li>
+<li><b>PWM</b> — pulse <i>width</i> ∝ sample. <b>PPM</b> — pulse <i>position</i> ∝ sample.</li>
+<li><b>PCM</b> — sample → quantise → encode to binary (fully digital).</li>
+</ul>
+
+<h2>PCM &amp; quantisation</h2>
+<ul>
+<li>Bits per sample $n$, levels $L = 2^n$; bit rate $= n&#92;,f_s$.</li>
+<li>Quantisation noise ⇒ $SNR_{dB} &#92;approx 6.02n + 1.76$ — each extra bit adds ~6 dB.</li>
+<li><b>Companding</b> (µ-law / A-law) compresses then expands to improve SNR for small signals (telephony).</li>
+<li><b>DPCM / Delta modulation</b> transmit differences for compression.</li>
+</ul>
+
+<h2>Digital carrier modulation</h2>
+<table>
+<tr><th>Scheme</th><th>Varied</th><th>Note</th></tr>
+<tr><td>ASK</td><td>amplitude</td><td>on-off keying; simple, noise-prone</td></tr>
+<tr><td>FSK</td><td>frequency</td><td>robust; modems</td></tr>
+<tr><td>PSK</td><td>phase</td><td>BPSK/QPSK; bandwidth-efficient</td></tr>
+<tr><td>QAM</td><td>amp + phase</td><td>highest data rate (Wi-Fi, cable)</td></tr>
+</table>
+
+<h2>Multiplexing</h2>
+<p><b>TDM</b> interleaves channels in time (digital); <b>FDM</b> stacks them in frequency (analog); CDM uses orthogonal codes. Line codes (NRZ, Manchester) shape the baseband bits — Manchester is self-clocking.</p>
+<blockquote>Exam traps: Nyquist f_s ≥ 2f_m, undersampling = aliasing; PCM = sample+quantise+encode; bit rate = n·f_s; SNR ≈ 6n+1.76 dB (≈6 dB/bit); companding helps small signals; FSK robust, PSK/QAM bandwidth-efficient; TDM = time, FDM = frequency.</blockquote>`,
 };
 
 /* ============================================================ STATE ============================================================ */
